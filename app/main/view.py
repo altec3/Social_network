@@ -6,11 +6,17 @@ bp_main = Blueprint("bp_main", __name__, template_folder="templates")
 main_dao = MainDAO()
 
 
-@bp_main.route("/")
+@bp_main.route("/", methods=["GET", "POST"])
 def main_page():
     posts = main_dao.posts_all()
-    bookmarks = main_dao.load_bookmarks()
-    return render_template("index.html", posts=posts, bookmarks=bookmarks)
+    if request.method == "GET":
+        bookmarks = main_dao.bookmarks()
+        return render_template("index.html", posts=posts, bookmarks=bookmarks)
+    if request.method == "POST":
+        pk = int(request.form.get("add"))
+        main_dao.add_bookmarks(pk)
+        bookmarks = main_dao.bookmarks()
+        return render_template("index.html", posts=posts, bookmarks=bookmarks)
 
 
 @bp_main.route("/posts/<int:pk>")
@@ -40,4 +46,5 @@ def users_posts_page(username: str):
 
 @bp_main.route("/bookmarks/")
 def bookmarks_page():
-    return render_template("bookmarks.html")
+    bookmarks = main_dao.bookmarks()
+    return render_template("bookmarks.html", posts=bookmarks)
