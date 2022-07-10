@@ -1,8 +1,7 @@
-from utils import load_json, save_as_json
+from utils import load_json
 
 DATA_SRC = "data/data.json"
 COMMENTS_SRC = "data/comments.json"
-BOOKMARKS_SRC = "data/bookmarks.json"
 
 
 class MainDAO:
@@ -10,11 +9,9 @@ class MainDAO:
     def __init__(self,
                  data_path: str = DATA_SRC,
                  com_path: str = COMMENTS_SRC,
-                 bookmarks_path: str = BOOKMARKS_SRC
                  ):
         self.data_path = data_path
         self.com_path = com_path
-        self.bookmarks_path = bookmarks_path
 
     def posts_all(self) -> list[dict]:
         return load_json(self.data_path)
@@ -86,10 +83,3 @@ class MainDAO:
             return posts
         else:
             return None
-
-    def load_bookmarks(self):
-        return load_json(self.bookmarks_path)
-
-    def save_bookmarks(self, pk: int, path: str):
-        post = [self.post_by_pk(pk)]
-        save_as_json(post, path)

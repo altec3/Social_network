@@ -49,7 +49,7 @@
           </div>
           <div class="item__post-bottom">
             <a href="/posts/{{ post.pk }}" class="item__btn-more">Подробнее</a>
-            <form action="" method="post">
+            <form action="/bookmarks/add/" method="post">
               <button type="submit" name="add" value="{{ post.pk }}" class="item__bookmark-btn">
                 <img src="../../../static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
               </button>

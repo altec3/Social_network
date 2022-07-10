@@ -1,12 +1,14 @@
 from flask import Flask, render_template
 
 from app.main.view import bp_main
+from app.bookmarks.view import bp_bookmarks
 from app.api.view import bp_get_json
 
 app = Flask(__name__)
 
 app.config.from_pyfile("config.py")
 app.register_blueprint(bp_main)
+app.register_blueprint(bp_bookmarks)
 app.register_blueprint(bp_get_json)
 
 

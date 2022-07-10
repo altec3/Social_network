@@ -1,22 +1,19 @@
 from flask import Blueprint, render_template, request, escape
+
 from app.main.dao.main_dao import MainDAO
+from app.bookmarks.dao.bookmarks_dao import BookmarksDAO
 
 bp_main = Blueprint("bp_main", __name__, template_folder="templates")
 
 main_dao = MainDAO()
+bookmarks_dao = BookmarksDAO()
 
 
-@bp_main.route("/", methods=["GET", "POST"])
+@bp_main.route("/")
 def main_page():
     posts = main_dao.posts_all()
-    if request.method == "GET":
-        bookmarks = main_dao.bookmarks()
-        return render_template("index.html", posts=posts, bookmarks=bookmarks)
-    if request.method == "POST":
-        pk = int(request.form.get("add"))
-        main_dao.add_bookmarks(pk)
-        bookmarks = main_dao.bookmarks()
-        return render_template("index.html", posts=posts, bookmarks=bookmarks)
+    bookmarks = bookmarks_dao.all_bookmarks()
+    return render_template("index.html", posts=posts, bookmarks=bookmarks)
 
 
 @bp_main.route("/posts/<int:pk>")
@@ -42,9 +39,3 @@ def search_page():
 def users_posts_page(username: str):
     posts = main_dao.posts_by_user(escape(username))
     return render_template("user-feed.html", posts=posts)
-
-
-@bp_main.route("/bookmarks/")
-def bookmarks_page():
-    bookmarks = main_dao.bookmarks()
-    return render_template("bookmarks.html", posts=bookmarks)

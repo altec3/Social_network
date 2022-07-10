@@ -312,7 +312,9 @@ textarea {
 	padding-top: 10px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #FF2768
+	color: #FF2768;
+	background: transparent;
+    border: none !important;
 }
 
 .item__head {
