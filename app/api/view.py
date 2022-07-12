@@ -5,15 +5,7 @@ from app.main.view import main_dao
 from loggers_conf import create_logger
 
 create_logger()
-
 logger = logging.getLogger('basic')
-
-# logging.basicConfig(level=logging.INFO)
-# logger_api = logging.getLogger("api")
-# file_handler = logging.FileHandler("logs/api.log", encoding="utf-8")
-# formatter = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
-# file_handler.setFormatter(formatter)
-# logger_api.addHandler(file_handler)
 
 bp_get_json = Blueprint("bp_get_json", __name__)
 
