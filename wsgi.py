@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.config.from_pyfile("config.py")
 app.register_blueprint(bp_main)
-app.register_blueprint(bp_bookmarks)
+app.register_blueprint(bp_bookmarks, url_prefix="/bookmarks")
 app.register_blueprint(bp_get_json)
 
 

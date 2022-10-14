@@ -5,25 +5,29 @@ from app.main.dao.main_dao import MainDAO
 
 bp_bookmarks = Blueprint("bp_bookmarks", __name__, template_folder="templates")
 
+
+# bookmarks_src = current_app.config.get("BOOKMARKS_SRC")
+# data_src = current_app.config.get("DATA_SRC")
+# comments_src = current_app.config.get("COMMENTS_SRC")
+
 bookmarks_dao = BookmarksDAO()
 main_dao = MainDAO()
 
 
-@bp_bookmarks.route("/bookmarks/")
+@bp_bookmarks.route("/")
 def bookmarks_page():
     bookmarks = bookmarks_dao.all_bookmarks()
     return render_template("bookmarks.html", posts=bookmarks)
 
 
-@bp_bookmarks.route("/bookmarks/add/", methods=["POST"])
-def add_bookmark():
-    pk = int(request.form.get("add"))
-    post = main_dao.post_by_pk(pk)
+@bp_bookmarks.route("/add/<int:pid>")
+def add_bookmark(pid: int):
+    post = main_dao.post_by_pk(pid)
     bookmarks_dao.add_bookmark(post)
     return redirect("/", code=302)
 
 
-@bp_bookmarks.route("/bookmarks/del/", methods=["POST"])
+@bp_bookmarks.route("/del/", methods=["POST"])
 def del_bookmark():
     pk = int(request.form.get("del"))
     post = main_dao.post_by_pk(pk)
